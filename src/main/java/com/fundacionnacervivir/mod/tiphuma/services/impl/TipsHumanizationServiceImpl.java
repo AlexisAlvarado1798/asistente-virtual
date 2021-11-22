@@ -62,7 +62,7 @@ public class TipsHumanizationServiceImpl implements TipsHumanizationServices {
     // Crea el Job.
     jobFactoryServices.createJob(tipsHumanizationDto.getCode(), tipsHumanizationDto.getConExpressionDate());
 
-    jobFactoryServices.findAllJobs();
+    //jobFactoryServices.findAllJobs();
 
     // mapper de dto a entity
     tipsHumanizationRepositories.save(TipsHumanizationQuery.mapperDtoToEntity(tipsHumanizationDto));

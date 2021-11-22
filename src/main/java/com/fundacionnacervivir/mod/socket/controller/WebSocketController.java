@@ -10,7 +10,7 @@ public class WebSocketController {
   private final SimpMessagingTemplate template;
 
   @Autowired
-  WebSocketController(SimpMessagingTemplate template){
+  public WebSocketController(SimpMessagingTemplate template){
     this.template = template;
   }
 

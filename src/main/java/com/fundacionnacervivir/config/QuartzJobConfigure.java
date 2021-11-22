@@ -1,3 +1,4 @@
+/*
 package com.fundacionnacervivir.config;
 
 import org.quartz.CronScheduleBuilder;
@@ -8,24 +9,53 @@ import org.quartz.TriggerBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.fundacionnacervivir.mod.tiphuma.jobs.TipsHumanizationJob;
+import com.fundacionnacervivir.mod.core.entities.TipsHumanization;
+import com.fundacionnacervivir.mod.core.repositories.TipsHumanizationRepositories;
+import com.fundacionnacervivir.mod.tiphuma.jobs.QuartzJobTips;
+
+import java.util.List;
 
 @Configuration
 public class QuartzJobConfigure {
+  TipsHumanizationRepositories tipsHumanizationRepositories;
+
+  public QuartzJobConfigure(final TipsHumanizationRepositories tipsHumanizationRepositories) {
+    this.tipsHumanizationRepositories = tipsHumanizationRepositories;
+  }
 
   @Bean
   public JobDetail jobDetail() {
-    return JobBuilder.newJob(TipsHumanizationJob.class).withIdentity("sampleJobA").storeDurably().build();
+    List<TipsHumanization> jobsData = tipsHumanizationRepositories.findAll();
+    System.out.println("Todos los JOBS SON: " + jobsData.size());
+
+    for (TipsHumanization tipsJob : jobsData) {
+      JobBuilder.newJob(QuartzJobTips.class).withIdentity(tipsJob.getTipsCode())
+          .withDescription(tipsJob.getTipsDescription()).storeDurably().build();
+
+    }
+    return null;
   }
 
   /**
    * @param jobADetails
    * @return
    */
+/*
   @Bean
   public Trigger jobATrigger(JobDetail jobADetails) {
-    return TriggerBuilder.newTrigger().forJob(jobADetails).withIdentity("TriggerA")
-        .withSchedule(CronScheduleBuilder.cronSchedule("0 46 16 ? * 3 *")).build();
+    List<TipsHumanization> jobsData = tipsHumanizationRepositories.findAll();
+    System.out.println("Todos los JOBS SON: " + jobsData.size());
+
+    for (TipsHumanization tipsJob : jobsData) {
+      TriggerBuilder.newTrigger().forJob(jobADetails).withIdentity(tipsJob.getTipsCode())
+          .withSchedule(CronScheduleBuilder.cronSchedule(tipsJob.getTipsCron())).build();
+    }
+    return null;
   }
 
+
+
 }
+
+   */
+

@@ -13,6 +13,12 @@ public interface JobFactoryServices {
    */
   void createJob(String code, String cron) throws SchedulerException;
 
+  /**
+   *
+   * Find the Jobs
+   * @throws SchedulerException
+   *
+   */
   void findAllJobs() throws SchedulerException;
 
   void statusJob(String code, Boolean statu) throws SchedulerException;
